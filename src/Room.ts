@@ -193,7 +193,7 @@ export abstract class Room<State= any, Metadata= any> extends EventEmitter {
     return this.listing.metadata;
   }
 
-  public async lock() {
+  public lock() {
     // rooms locked internally aren't explicit locks.
     this._lockedExplicitly = (arguments[0] === undefined);
 
@@ -204,12 +204,12 @@ export abstract class Room<State= any, Metadata= any> extends EventEmitter {
 
     this._locked = true;
 
-    return await this.listing.updateOne({
+    return this.listing.updateOne({
       $set: { locked: this._locked },
     });
   }
 
-  public async unlock() {
+  public unlock() {
     // only internal usage passes arguments to this function.
     if (arguments[0] === undefined) {
       this._lockedExplicitly = false;
@@ -222,7 +222,7 @@ export abstract class Room<State= any, Metadata= any> extends EventEmitter {
 
     this._locked = false;
 
-    return await this.listing.updateOne({
+    return this.listing.updateOne({
       $set: { locked: this._locked },
     });
   }
